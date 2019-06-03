@@ -22,9 +22,13 @@ public class ProductCategoryRepositoryTest {
     }
 
     @Test
-    public  void saveTest(){
+    public  void  saveTest(){
 
-
+        ProductCategory productCategory  = new ProductCategory();
+        productCategory.setCategoryName("奶奶最爱");
+        productCategory.setCategoryId(4);
+        productCategory.setCategoryType(4);
+        repository.save(productCategory);
 
     }
 

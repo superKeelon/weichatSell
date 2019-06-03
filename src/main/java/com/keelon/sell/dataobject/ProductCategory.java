@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 @Entity
-@DynamicUpdate
+@DynamicUpdate//动态的更新时间
 @Proxy(lazy = false)
 @Data
 public class ProductCategory {
