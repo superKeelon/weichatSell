@@ -31,7 +31,7 @@ public class ProductInfoRespositoryTest {
 
         ProductInfo productInfo = new ProductInfo();
 
-        productInfo.setProductId("123456");
+        productInfo.setProductId("123454");
         productInfo.setProductName("皮蛋粥");
         productInfo.setProductPrice(new BigDecimal(3.3));
         productInfo.setProductStock(100);
@@ -41,6 +41,8 @@ public class ProductInfoRespositoryTest {
         productInfo.setCategoryType(1);
 
         ProductInfo result = repository.save(productInfo);
+
+
         Assert.assertNotNull(result);
 
 
