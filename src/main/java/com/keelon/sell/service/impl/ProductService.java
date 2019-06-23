@@ -2,6 +2,7 @@ package com.keelon.sell.service.impl;
 
 
 import com.keelon.sell.dataobject.ProductInfo;
+import com.keelon.sell.dto.CartDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -31,9 +32,12 @@ public interface ProductService {
     //加库存。
 
 
-
+   void increaseStock(List<CartDTO> cartDTOList);
 
     //减库存。
+    void decreaseStock(List<CartDTO> cartDTOList);
+
+
 
 
 

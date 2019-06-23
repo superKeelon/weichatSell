@@ -27,7 +27,7 @@ public class OrderDetail {
     /**商品数量*/
     private Integer productQuantity;
     /**商品小图*/
-    private  String pruductIcon;
+    private  String productIcon;
 
 
 
