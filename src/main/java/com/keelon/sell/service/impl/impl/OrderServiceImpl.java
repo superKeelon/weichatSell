@@ -1,6 +1,7 @@
 package com.keelon.sell.service.impl.impl;
 
 
+import com.keelon.sell.converter.OrderMaster2OrderDTOConverter;
 import com.keelon.sell.dataobject.OrderDetail;
 import com.keelon.sell.dataobject.OrderMaster;
 import com.keelon.sell.dataobject.ProductInfo;
@@ -18,8 +19,10 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -99,12 +102,41 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO findOne(String orderId) {
-        return null;
+
+        OrderMaster orderMaster = orderMasterRepository.getOne(orderId);
+
+        if (orderMaster == null){
+
+
+            throw new SellException(ResultEnum.ORDER_NOT_EXIST);
+        }
+
+
+        List<OrderDetail> orderDetailList  = orderDetailRepository.findByOrderId(orderId);
+
+        if (CollectionUtils.isEmpty(orderDetailList)){
+            throw new SellException(ResultEnum.ORDER_NOT_EXIST);
+
+
+        }
+        OrderDTO orderDTO = new OrderDTO();
+        BeanUtils.copyProperties(orderMaster,orderDTO);
+        orderDTO.setOrderDetailList(orderDetailList);
+        return  orderDTO;
+
     }
+
 
     @Override
     public Page<OrderDTO> findList(String buyerOpenid, Pageable pageable) {
-        return null;
+
+        Page<OrderMaster> orderMasterPage = orderMasterRepository.findByBuyerOpenid(buyerOpenid,pageable);
+
+        List<OrderDTO> orderDTOList = OrderMaster2OrderDTOConverter.convert(orderMasterPage.getContent());
+        Page<OrderDTO> orderDTOPage = new PageImpl<OrderDTO>(orderDTOList,pageable,orderMasterPage.getTotalElements());
+        return  orderDTOPage;
+
+
     }
 
     @Override

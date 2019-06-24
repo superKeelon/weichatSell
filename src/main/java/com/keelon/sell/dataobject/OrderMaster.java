@@ -6,12 +6,13 @@ import com.keelon.sell.enums.OrderStatusEnum;
 import com.keelon.sell.enums.PayStatusEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
-
+@Proxy(lazy = false)
 @Entity
 @Data
 @DynamicUpdate

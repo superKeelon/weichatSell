@@ -3,10 +3,13 @@ package com.keelon.sell.service.impl.impl;
 import com.keelon.sell.dataobject.OrderDetail;
 import com.keelon.sell.dto.OrderDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.swing.*;
@@ -25,6 +28,7 @@ public class OrderServiceImplTest {
 
 
     private final String BUYER_OPERNID = "1101110";
+    private final String ORDER_ID = "1561313509404331770";
 
 
     @Test
@@ -55,14 +59,27 @@ public class OrderServiceImplTest {
         orderDTO.setOrderDetailList(orderDetailList);
         OrderDTO result = orderService.create(orderDTO);
         log.info("创建订单 result={}",result);
+        Assert.assertNotNull(result);
     }
 
     @Test
     public void findOne() {
+
+        OrderDTO orderDTO =  orderService.findOne(ORDER_ID);
+        log.info("【查询订单】result={}",orderDTO);
+        Assert.assertNotEquals(orderDTO,orderDTO.getOrderId());
+
+
+
     }
 
     @Test
-    public void findList() {
+    public void findList() throws Exception{
+
+        PageRequest request = new PageRequest(0,2);
+        Page<OrderDTO> orderDTOPage = orderService.findList(BUYER_OPERNID,request);
+
+        Assert.assertNotEquals(0,orderDTOPage.getTotalElements());
     }
 
     @Test
