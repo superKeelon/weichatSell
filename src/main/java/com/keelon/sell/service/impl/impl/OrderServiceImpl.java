@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 //快捷键，实现接口中的方法control + O
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -140,17 +141,42 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO cancel(OrderDTO orderDTO) {
+    public OrderDTO cancel(OrderDTO orderDTO){
         return null;
+
+
     }
 
     @Override
     public OrderDTO finish(OrderDTO orderDTO) {
-        return null;
+        if (orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())){
+
+            throw new SellException(ResultEnum.ORDER_NOT_EXIST);
+        }
+
+
+        //修改订单的状态。
+        orderDTO.setOrderStatus(OrderStatusEnum.FINISH.getCode());
+        OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(orderDTO,orderMaster);
+        OrderMaster updateResult = orderMasterRepository.save(orderMaster);
+
+
+
+        if (updateResult == null){
+            throw new SellException(ResultEnum.ORDER_UPDATE_ERROR);
+        }
+
+
+        return  orderDTO;
+
+
     }
 
     @Override
     public OrderDTO paid(OrderDTO orderDTO) {
-        return null;
+
+        
+            return null;
     }
 }

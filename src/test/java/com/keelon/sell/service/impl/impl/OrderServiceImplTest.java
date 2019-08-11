@@ -2,6 +2,7 @@ package com.keelon.sell.service.impl.impl;
 
 import com.keelon.sell.dataobject.OrderDetail;
 import com.keelon.sell.dto.OrderDTO;
+import com.keelon.sell.enums.OrderStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -84,13 +85,26 @@ public class OrderServiceImplTest {
 
     @Test
     public void cancel() {
+
+
+
+
+
     }
 
     @Test
     public void finish() {
+
+
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.finish(orderDTO);
+        Assert.assertEquals(OrderStatusEnum.FINISH.getCode(),result.getOrderStatus());
+
     }
 
     @Test
     public void paid() {
+
+
     }
 }
